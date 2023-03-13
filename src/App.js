@@ -1,16 +1,25 @@
-// import logo from './logo.svg';
-import './component/style.css';
-import Input from './component/Input';
-import List from './component/List';
+import React, { useEffect, useState } from 'react'
+import ShowAnimals from './ShowAnimals';
 
-function App() {
-  return (
-    <div className='main'>
-      {/* <h2>Hello World!</h2> */}
-      <Input />
-      <List />
-    </div>
-  );
+function getAnimal(){
+    const animalArr = ['dog', 'horse', 'cow', 'gator', 'cat', 'bird'];
+    return animalArr[Math.round(Math.random() * animalArr.length)]
 }
+console.log("random animals", getAnimal());
 
-export default App;
+export default function App() {
+    // console.log("useState", useState(0));
+    const [animal, setAnimal] = useState([]);
+
+    const handleClick = () => {
+        setAnimal([...animal, getAnimal()])
+    }
+
+  return (
+    <div>{console.log("html render", animal)}
+        <button onClick={handleClick}>Add Animal</button>
+        <p>Show animal</p>
+        { animal && animal.map((itm, i) => <ShowAnimals type={itm} key={i} />) }
+    </div>
+  )
+}
