@@ -1,0 +1,10 @@
+
+.mainImg{
+    display: flex;
+    flex-direction: row-reverse;
+    flex-flow: wrap;
+}
+.error{
+    color: #b60000;
+    font-size: 12px
+}

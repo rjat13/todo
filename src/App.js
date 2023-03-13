@@ -1,25 +1,26 @@
-import React, { useEffect, useState } from 'react'
-import ShowAnimals from './ShowAnimals';
-
-function getAnimal(){
-    const animalArr = ['dog', 'horse', 'cow', 'gator', 'cat', 'bird'];
-    return animalArr[Math.round(Math.random() * animalArr.length)]
-}
-console.log("random animals", getAnimal());
+import React, { useState } from 'react'
+import 'bulma/css/bulma.min.css'
+import './styles.css'
+import SearchBar from './SearchBar';
+import { getImage } from './Apis';
+import ImageList from './ImageList';
 
 export default function App() {
-    // console.log("useState", useState(0));
-    const [animal, setAnimal] = useState([]);
+  const [imgList, setImgList] = useState([])
 
-    const handleClick = () => {
-        setAnimal([...animal, getAnimal()])
-    }
+  const handleSubmit = async (searchTxt) => {
+    console.log("called api", searchTxt)
+    const result = await getImage(searchTxt);
+    console.log('result', result)
+    setImgList(result?.results);
+  }
 
   return (
-    <div>{console.log("html render", animal)}
-        <button onClick={handleClick}>Add Animal</button>
-        <p>Show animal</p>
-        { animal && animal.map((itm, i) => <ShowAnimals type={itm} key={i} />) }
+    <section className='section'>
+    <div className='container'>
+      <SearchBar onSubmit={handleSubmit} />
+      <ImageList imgList={imgList} />
     </div>
+    </section>
   )
 }
